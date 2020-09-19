@@ -16,6 +16,10 @@ def download(data):
 	data["Artist"] = data["Artist"].replace("/", "-")
 	output = f"output/{data['Artist']}/{data['Artist']} - {data['Title']}-R-.%(ext)s"
 
+	if os.path.exists(f"output/{data['Artist']}/{data['Artist']} - {data['Title']}.ogg"):
+		print("- Already exists. Skipping.")
+		return 0
+
 	process = subprocess.run(
 		[
 			"youtube-dl", "-x", "--audio-format", "vorbis",
