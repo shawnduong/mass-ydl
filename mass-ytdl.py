@@ -96,8 +96,6 @@ def main(args):
 	# Download the music from the video and set its metadata.
 	for item in data:
 		print(f"DL: {item['Artist']} - {item['Title']}.ogg")
-		print(item)
-		print("-"*64)
 		if download(item) == -1:
 			print("^^^ ERROR OCCURRED. Writing to alerts.txt.")
 			open("alerts.txt", "a+").write(str(item))
