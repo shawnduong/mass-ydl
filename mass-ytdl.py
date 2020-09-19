@@ -42,18 +42,21 @@ def download(data):
 	finput = f"output/{data['Artist']}/{data['Artist']} - {data['Title']}-R-.ogg"
 	output = f"output/{data['Artist']}/{data['Artist']} - {data['Title']}.ogg"
 
-	process = subprocess.run(
-		[
-			"ffmpeg", "-i", finput, "-acodec", "copy",
-			"-metadata", f"title=\"{data['Title']}\"",
-			"-metadata", f"artist=\"{data['Artist']}\"",
-			"-metadata", f"album=\"{data['Album']}\"",
-			"-metadata", f"track=\"{data['Track #']}/{data['out of']}\"",
-			output
-		],
-		stdout=open(os.devnull, "wb"),
-		stderr=open(os.devnull, "wb")
-	)
+	cliargs = [
+		"ffmpeg", "-i", finput, "-acodec", "copy",
+		"-metadata", f"title=\"{data['Title']}\"",
+		"-metadata", f"artist=\"{data['Artist']}\"",
+		"-metadata", f"album=\"{data['Album']}\"",
+	]
+
+	if data["Track #"] != "" and data["out of"] != "":
+		cliargs.append("-metadata")
+		cliargs.append(f"track=\"{data['Track #']}/{data['out of']}\"")
+
+	cliargs.append(output)
+
+
+	process = subprocess.run(cliargs, stdout=open(os.devnull, "wb"), stderr=open(os.devnull, "wb"))
 
 	if process.returncode != 0:
 		return -1
