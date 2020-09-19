@@ -3,6 +3,7 @@
 import os
 import subprocess
 import sys
+import time
 import xlrd
 
 def print_help():
@@ -16,9 +17,13 @@ def download(data):
 	data["Artist"] = data["Artist"].replace("/", "-")
 	output = f"output/{data['Artist']}/{data['Artist']} - {data['Title']}-R-.%(ext)s"
 
+	print(f"==> [..........]   0% Downloading: {data['Artist']} - {data['Title']}.ogg", end=" ")
+
 	if os.path.exists(f"output/{data['Artist']}/{data['Artist']} - {data['Title']}.ogg"):
 		print("- Already exists. Skipping.")
 		return 0
+
+	print(f"\r==> [#.........]  10% Downloading: {data['Artist']} - {data['Title']}.ogg", end=" ")
 
 	process = subprocess.run(
 		[
@@ -31,6 +36,8 @@ def download(data):
 
 	if process.returncode != 0:
 		return -1
+
+	print(f"\r==> [#######...]  70% Downloading: {data['Artist']} - {data['Title']}.ogg", end=" ")
 
 	finput = f"output/{data['Artist']}/{data['Artist']} - {data['Title']}-R-.ogg"
 	output = f"output/{data['Artist']}/{data['Artist']} - {data['Title']}.ogg"
@@ -51,6 +58,8 @@ def download(data):
 	if process.returncode != 0:
 		return -1
 
+	print(f"\r==> [#########.]  90% Downloading: {data['Artist']} - {data['Title']}.ogg", end=" ")
+
 	process = subprocess.run(
 		[
 			"rm", "-f", finput
@@ -62,7 +71,11 @@ def download(data):
 	if process.returncode != 0:
 		return -1
 
+	print(f"\r==> [##########] 100% Downloading: {data['Artist']} - {data['Title']}.ogg", end=" ")
+
 def main(args):
+
+	start = time.time()
 
 	# Argument checking.
 	if len(args) != 1 or "-h" in args or "--help" in args:
@@ -99,12 +112,12 @@ def main(args):
 
 	# Download the music from the video and set its metadata.
 	for item in data:
-		print(f"DL: {item['Artist']} - {item['Title']}.ogg")
 		if download(item) == -1:
-			print("^^^ ERROR OCCURRED. Writing to alerts.txt.")
-			open("alerts.txt", "a+").write(str(item))
+			print("ERROR ENCOUNTERED! See alerts.txt.")
+			open("alerts.txt", "a+").write(str(item)+"\n")
+		print()
 
-	print("Done.")
+	print(f"Done with {len(data)} items in {int(time.time()-start)} seconds elapsed.")
 
 if __name__ == "__main__":
 	main(sys.argv[1::])
