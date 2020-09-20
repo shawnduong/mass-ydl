@@ -20,7 +20,7 @@ def download(data):
 	print(f"==> [..........]   0% Downloading: {data['Artist']} - {data['Title']}.ogg", end=" ")
 
 	if os.path.exists(f"output/{data['Artist']}/{data['Album']}/{data['Artist']} - {data['Title']}.ogg"):
-		print("- Already exists. Skipping.")
+		print("- Already exists. Skipping.", end=" ")
 		return 0
 
 	print(f"\r==> [#.........]  10% Downloading: {data['Artist']} - {data['Title']}.ogg", end=" ")
