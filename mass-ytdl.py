@@ -13,8 +13,8 @@ def print_help():
 
 def download(data):
 
-	data["Title"] = data["Title"].replace("/", "-")
-	data["Artist"] = data["Artist"].replace("/", "-")
+	data["Title"] = str(data["Title"]).replace("/", "-")
+	data["Artist"] = str(data["Artist"]).replace("/", "-")
 	output = f"output/{data['Artist']}/{data['Album']}/{data['Artist']} - {data['Title']}-R-.%(ext)s"
 
 	print(f"==> [..........]   0% Downloading: {data['Artist']} - {data['Title']}.ogg", end=" ")
@@ -109,7 +109,13 @@ def main(args):
 	for row in range(1, spreadsheet.nrows):
 		item = template.copy()
 		for column in range(len(spreadsheet.row(row))):
-			item[headers[column]] = spreadsheet.row(row)[column].value
+			value = spreadsheet.cell(row, column).value
+			if type(value) == float:
+				if value == int(value):
+					value = str(int(value))
+				else:
+					value = str(value)
+			item[headers[column]] = value
 		data.append(item)
 
 	# Download the music from the video and set its metadata.
