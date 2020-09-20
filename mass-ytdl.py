@@ -15,11 +15,11 @@ def download(data):
 
 	data["Title"] = data["Title"].replace("/", "-")
 	data["Artist"] = data["Artist"].replace("/", "-")
-	output = f"output/{data['Artist']}/{data['Artist']} - {data['Title']}-R-.%(ext)s"
+	output = f"output/{data['Artist']}/{data['Album']}/{data['Artist']} - {data['Title']}-R-.%(ext)s"
 
 	print(f"==> [..........]   0% Downloading: {data['Artist']} - {data['Title']}.ogg", end=" ")
 
-	if os.path.exists(f"output/{data['Artist']}/{data['Artist']} - {data['Title']}.ogg"):
+	if os.path.exists(f"output/{data['Artist']}/{data['Album']}/{data['Artist']} - {data['Title']}.ogg"):
 		print("- Already exists. Skipping.")
 		return 0
 
@@ -39,8 +39,8 @@ def download(data):
 
 	print(f"\r==> [#######...]  70% Downloading: {data['Artist']} - {data['Title']}.ogg", end=" ")
 
-	finput = f"output/{data['Artist']}/{data['Artist']} - {data['Title']}-R-.ogg"
-	output = f"output/{data['Artist']}/{data['Artist']} - {data['Title']}.ogg"
+	finput = f"output/{data['Artist']}/{data['Album']}/{data['Artist']} - {data['Title']}-R-.ogg"
+	output = f"output/{data['Artist']}/{data['Album']}/{data['Artist']} - {data['Title']}.ogg"
 
 	cliargs = [
 		"ffmpeg", "-i", finput, "-acodec", "copy",
@@ -54,7 +54,6 @@ def download(data):
 		cliargs.append(f"track=\"{data['Track #']}/{data['out of']}\"")
 
 	cliargs.append(output)
-
 
 	process = subprocess.run(cliargs, stdout=open(os.devnull, "wb"), stderr=open(os.devnull, "wb"))
 
