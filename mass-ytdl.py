@@ -112,10 +112,10 @@ def main(args):
 		for column in range(len(spreadsheet.row(row))):
 			value = spreadsheet.cell(row, column).value
 			if type(value) == float:
-				if value == int(value):
-					value = str(int(value))
+				if value == int(float(value)):
+					value = str(int(float(value)))
 				else:
-					value = str(value)
+					value = "ERROR"
 			item[headers[column]] = value
 		data.append(item)
 
