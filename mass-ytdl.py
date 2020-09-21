@@ -44,6 +44,7 @@ def download(data):
 
 	cliargs = [
 		"ffmpeg", "-i", finput, "-acodec", "copy",
+		"-map_metadata", "-1",
 		"-metadata", "title=%s" % data['Title'],
 		"-metadata", "artist=%s" % data['Artist'],
 		"-metadata", "album=%s" % data['Album'],
