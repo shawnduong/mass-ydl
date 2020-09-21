@@ -44,14 +44,14 @@ def download(data):
 
 	cliargs = [
 		"ffmpeg", "-i", finput, "-acodec", "copy",
-		"-metadata", f"title=\"{data['Title']}\"",
-		"-metadata", f"artist=\"{data['Artist']}\"",
-		"-metadata", f"album=\"{data['Album']}\"",
+		"-metadata", "title=%s" % data['Title'],
+		"-metadata", "artist=%s" % data['Artist'],
+		"-metadata", "album=%s" % data['Album'],
 	]
 
 	if data["Track #"] != "" and data["out of"] != "":
 		cliargs.append("-metadata")
-		cliargs.append(f"track=\"{data['Track #']}/{data['out of']}\"")
+		cliargs.append("track=%s/%s" % (data["Track #"], data["out of"]))
 
 	cliargs.append(output)
 
