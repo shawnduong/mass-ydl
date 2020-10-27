@@ -1,3 +1,7 @@
+# NOTICE
+
+Due to the [tragic loss of youtube-dl](https://github.com/github/dmca/blob/master/2020/10/2020-10-23-RIAA.md), this project will no longer be updated and has been archived.
+
 # mass-ytdl
 
 A mass youtube-dl script for downloading large quantities of music with metadata. Requires Python, youtube-dl, ffmpeg, and xlrd.
