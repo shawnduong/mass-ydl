@@ -8,7 +8,7 @@ import xlrd
 
 def print_help():
 
-	print("Usage: ./mass-mus-ydl <SPREADSHEET>")
+	print("Usage: ./mass-ydl <SPREADSHEET>")
 	print("Make sure <SPREADSHEET> is a path to a valid spreadsheet.")
 
 def download(data):
